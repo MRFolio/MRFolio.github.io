@@ -5,6 +5,7 @@ const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 const Input = () => {
   const [currentLocation, setCurrentLocation] = useState({});
+  const [locationWeather, setLocationWeather] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   // useEffect(() => {
@@ -37,20 +38,47 @@ const Input = () => {
           const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
           const response = await fetch(url);
           const data = await response.json();
-          console.log(data);
 
           const {
-            current: {
-              temp,
-              feels_like,
-              pressure,
-              humidity,
-              wind_deg,
-              wind_speed,
-            },
-          } = data;
+            dt,
+            temp,
+            feels_like,
+            pressure,
+            humidity,
+            wind_deg,
+            wind_speed,
+            weather: [{ icon }],
+          } = data.current;
 
-          return data;
+          const currentWeather = {
+            date: dt,
+            temp,
+            feels_like,
+            pressure,
+            humidity,
+            wind_deg,
+            wind_speed,
+            icon,
+          };
+
+          const forecast = data.daily.slice(1).map((item) => {
+            const {
+              dt,
+              weather: [{ icon }],
+              temp: { day },
+              wind_speed,
+            } = item;
+
+            return { date: dt, icon, temp: day, wind_speed };
+          });
+
+          const formattedData = {
+            currentWeather,
+            forecast,
+          };
+          setLocationWeather(formattedData);
+
+          return formattedData;
         } catch (error) {
           setError(error.message);
         } finally {
