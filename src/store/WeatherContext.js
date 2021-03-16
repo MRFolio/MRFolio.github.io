@@ -75,11 +75,11 @@ const WeatherProvider = ({ children }) => {
     if (currentLocation.lat && currentLocation.lon) {
       getWeatherForecast(currentLocation.lat, currentLocation.lon);
     }
-  }, [currentLocation]);
+  }, [currentLocation, getWeatherForecast]);
 
   return (
     <WeatherContext.Provider
-      value={{ setCurrentLocation, locationWeather, loading, error }}
+      value={{ setCurrentLocation, locationWeather, loading, error, setError }}
     >
       {children}
     </WeatherContext.Provider>
