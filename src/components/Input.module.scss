@@ -1,0 +1,11 @@
+.locationBtn {
+  border: none;
+  padding: 0.5em;
+  background: transparent;
+  cursor: pointer;
+
+  .locationBtnText {
+    font-size: 0.75rem;
+    border-bottom: 1px solid #000;
+  }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import styles from './Input.module.scss';
 
 const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
@@ -29,7 +30,7 @@ const Input = () => {
   // }, [query]);
 
   useEffect(() => {
-    if (navigator.geolocation && currentLocation.lat && currentLocation.lon) {
+    if (currentLocation.lat && currentLocation.lon) {
       const getWeatherForecast = async (latitude, longitude) => {
         setLoading(true);
         try {
@@ -37,6 +38,17 @@ const Input = () => {
           const response = await fetch(url);
           const data = await response.json();
           console.log(data);
+
+          const {
+            current: {
+              temp,
+              feels_like,
+              pressure,
+              humidity,
+              wind_deg,
+              wind_speed,
+            },
+          } = data;
 
           return data;
         } catch (error) {
@@ -60,7 +72,11 @@ const Input = () => {
     }
   };
 
-  return <button onClick={handleClick}>Tere</button>;
+  return (
+    <button className={styles.locationBtn} type="button" onClick={handleClick}>
+      <span className={styles.locationBtnText}>Select my current location</span>
+    </button>
+  );
 };
 
 export default Input;

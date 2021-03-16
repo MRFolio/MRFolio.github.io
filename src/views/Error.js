@@ -1,7 +1,20 @@
-// import styles from './Error.module.scss'
+import { useHistory } from 'react-router';
 
 const Error = () => {
-  return;
+  const history = useHistory();
+
+  const handleBack = () => {
+    history.goBack();
+  };
+
+  return (
+    <>
+      <p>Nothing to see here.</p>
+      <button style={{ cursor: 'pointer' }} onClick={handleBack}>
+        Go Back
+      </button>
+    </>
+  );
 };
 
 export default Error;
