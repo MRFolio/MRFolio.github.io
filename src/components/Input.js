@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import { useWeatherContext } from '../store/WeatherContext';
 import styles from './Input.module.scss';
 
 const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 const Input = () => {
-  const [currentLocation, setCurrentLocation] = useState({});
-  const [locationWeather, setLocationWeather] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const { loading, error, setCurrentLocation } = useWeatherContext();
+  const [userInput, setUserInput] = useState('');
   // useEffect(() => {
   //   const fetchCurrentCityWeather = async (city) => {
   //     const url = `${API_BASE_URL}?&q=${city}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
@@ -30,64 +31,14 @@ const Input = () => {
   //   fetchCurrentCityWeather('tartu');
   // }, [query]);
 
-  useEffect(() => {
-    if (currentLocation.lat && currentLocation.lon) {
-      const getWeatherForecast = async (latitude, longitude) => {
-        setLoading(true);
-        try {
-          const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
-          const response = await fetch(url);
-          const data = await response.json();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    history.push('/location/tartu');
+  };
 
-          const {
-            dt,
-            temp,
-            feels_like,
-            pressure,
-            humidity,
-            wind_deg,
-            wind_speed,
-            weather: [{ icon }],
-          } = data.current;
-
-          const currentWeather = {
-            date: dt,
-            temp,
-            feels_like,
-            pressure,
-            humidity,
-            wind_deg,
-            wind_speed,
-            icon,
-          };
-
-          const forecast = data.daily.slice(1).map((item) => {
-            const {
-              dt,
-              weather: [{ icon }],
-              temp: { day },
-              wind_speed,
-            } = item;
-
-            return { date: dt, icon, temp: day, wind_speed };
-          });
-
-          const formattedData = {
-            currentWeather,
-            forecast,
-          };
-          setLocationWeather(formattedData);
-
-          return formattedData;
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-      getWeatherForecast(currentLocation.lat, currentLocation.lon);
-    }
-  }, [currentLocation]);
+  const handleChange = (e) => {
+    setUserInput(e.target.value);
+  };
 
   const handleClick = () => {
     if (navigator.geolocation) {
@@ -100,10 +51,34 @@ const Input = () => {
     }
   };
 
+  // if (loading) return <Spinner />;
+
+  // if (error) {
+  //   return <p>Cannot display weather...</p>;
+  // }
+
   return (
-    <button className={styles.locationBtn} type="button" onClick={handleClick}>
-      <span className={styles.locationBtnText}>Select my current location</span>
-    </button>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="userInput"
+          id="userInput"
+          placeholder="Enter location"
+          value={userInput}
+          onChange={handleChange}
+        />
+      </form>
+      <button
+        className={styles.locationBtn}
+        type="button"
+        onClick={handleClick}
+      >
+        <span className={styles.locationBtnText}>
+          Select my current location
+        </span>
+      </button>
+    </>
   );
 };
 
