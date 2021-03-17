@@ -1,0 +1,47 @@
+@use "../styles/base" as b;
+
+.input {
+  @extend %locationShadow;
+  width: 501px;
+  height: 58px;
+  border: none;
+  margin: 1.5em 0;
+  padding: 0 2.625em;
+
+  &::placeholder {
+    font-size: 1.125rem;
+    color: #bdbdbd;
+  }
+
+  &:focus {
+    outline: none; // Should not be used normally, but I wanted the UI to look exactly like in the Figma file.
+  }
+}
+
+.clearBtn {
+  padding: 0.625em 0.75em;
+}
+
+.icon {
+  position: absolute;
+  left: 21%;
+  top: 31%;
+  font-size: 1.125rem;
+  color: #828282;
+}
+
+.suggestionsContainer {
+  width: 100%;
+  transform: all 0.1s ease-out;
+
+  .suggestionsList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .suggestion {
+    &.active {
+    }
+  }
+}

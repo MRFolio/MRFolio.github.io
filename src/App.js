@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { LocationWeather } from './components';
-import { Error, Home } from './views';
+import { Error, Home, LocationWeather } from './views';
 
 const App = () => {
   return (
@@ -10,8 +9,8 @@ const App = () => {
         <Route
           exact
           path="/location/:coordinates"
-          // component={LocationDetails}
-          render={(props) => <LocationWeather {...props} />}
+          component={LocationWeather}
+          // render={(props) => <Weather {...props} />}
         />
         <Route path="*" component={Error} />
       </Switch>

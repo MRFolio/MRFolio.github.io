@@ -1,0 +1,24 @@
+.container {
+  max-width: 680px;
+  max-height: 393px;
+  margin: 0 auto;
+
+  .currentWeather {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2em;
+    margin: 4em 0;
+    background: #e8e8e8;
+    border-radius: 0.625em;
+  }
+
+  .cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+    gap: 2em;
+  }
+}

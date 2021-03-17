@@ -1,10 +1,15 @@
-import { ChooseLocation } from '../components';
+import { ChooseLocation, Logo } from '../components';
 
 const Home = () => {
   return (
-    <main className="main">
-      <ChooseLocation />
-    </main>
+    <>
+      <header className="header">
+        <Logo />
+      </header>
+      <main className="main">
+        <ChooseLocation />
+      </main>
+    </>
   );
 };
 

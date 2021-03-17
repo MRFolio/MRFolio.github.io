@@ -1,17 +1,11 @@
-.header {
-  // height: 22.66vh;
-  height: 204px;
-  background: #f9f9f9;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 3.1525em;
-}
-
 .locationContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translateY(-38%);
+  // .form {
+  //   position: absolute;
+  // }
 
   .locationBtn {
     border: none;

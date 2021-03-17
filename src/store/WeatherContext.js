@@ -1,71 +1,81 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 
 const WeatherContext = createContext(null);
 
+// const getLocalStorage = () =>
+//   localStorage.getItem('recentlyViewed')
+//     ? JSON.parse(localStorage.getItem('recentlyViewed'))
+//     : [];
+
 const WeatherProvider = ({ children }) => {
-  const [currentLocation, setCurrentLocation] = useState({});
-  const [locationWeather, setLocationWeather] = useState({});
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [currentLocation, setCurrentLocation] = useState({});
+  // const [locationWeather, setLocationWeather] = useState({});
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
+  // const [recentlyViewed, setRecentlyViewed] = useState(getLocalStorage());
 
-  const getWeatherForecast = useCallback(async (latitude, longitude) => {
-    setLoading(true);
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+  // useEffect(() => {
+  //   localStorage.setItem('recentlyViewed', JSON.stringify(userInput));
+  // }, [recentlyViewed]);
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
+  // const getWeatherForecast = useCallback(async (latitude, longitude) => {
+  //   setLoading(true);
+  //   const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
 
-      const {
-        dt,
-        temp,
-        feels_like,
-        pressure,
-        humidity,
-        wind_deg,
-        wind_speed,
-        weather: [{ icon }],
-      } = data.current;
+  //   try {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
 
-      const currentWeather = {
-        time: dt,
-        temp,
-        feels_like,
-        pressure,
-        humidity,
-        wind_deg,
-        wind_speed,
-        icon,
-      };
+  //     const {
+  //       dt,
+  //       temp,
+  //       feels_like,
+  //       pressure,
+  //       humidity,
+  //       wind_deg,
+  //       wind_speed,
+  //       weather: [{ icon }],
+  //     } = data.current;
 
-      const forecast = data.daily.slice(1).map((item) => {
-        const {
-          dt,
-          weather: [{ icon }],
-          temp: { day },
-          wind_speed,
-        } = item;
+  //     const currentWeather = {
+  //       time: dt,
+  //       temp,
+  //       feels_like,
+  //       pressure,
+  //       humidity,
+  //       wind_deg,
+  //       wind_speed,
+  //       icon,
+  //     };
 
-        return { time: dt, icon, temp: day, wind_speed };
-      });
+  //     const forecast = data.daily.slice(1).map((item) => {
+  //       const {
+  //         dt,
+  //         weather: [{ icon }],
+  //         temp: { day },
+  //         wind_speed,
+  //       } = item;
 
-      const formattedData = {
-        currentWeather,
-        forecast,
-      };
-      setLocationWeather(formattedData);
-      //   history.push({
-      //     pathname: `/location/${latitude}-${longitude}`,
-      //     state: { formattedData },
-      //   });
+  //       return { time: dt, icon, temp: day, wind_speed };
+  //     });
 
-      return formattedData;
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  //     const formattedData = {
+  //       currentWeather,
+  //       forecast,
+  //     };
+  //     // setLocationWeather(formattedData);
+  //     //   history.push({
+  //     //     pathname: `/location/${latitude}-${longitude}`,
+  //     //     state: { formattedData },
+  //     //   });
+
+  //     return formattedData;
+  //   } catch (error) {
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   if (currentLocation.lat && currentLocation.lon) {
@@ -75,14 +85,18 @@ const WeatherProvider = ({ children }) => {
 
   return (
     <WeatherContext.Provider
-      value={{
-        locationWeather,
-        loading,
-        error,
-        setError,
-        setLoading,
-        setCurrentLocation,
-      }}
+      value={
+        {
+          // locationWeather,
+          // loading,
+          // error,
+          // setError,
+          // setLoading,
+          // setCurrentLocation,
+          // recentlyViewed,
+          // setRecentlyViewed,
+        }
+      }
     >
       {children}
     </WeatherContext.Provider>
