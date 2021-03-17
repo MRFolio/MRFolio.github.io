@@ -1,0 +1,14 @@
+.container {
+  max-width: 680px;
+  max-height: 393px;
+  margin: 0 auto;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0;
+  gap: 2em;
+}

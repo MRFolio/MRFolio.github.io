@@ -1,0 +1,41 @@
+.container {
+  max-width: 442px;
+  max-height: 92px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //   padding: 0.625em;
+  background: #f9f9f9;
+  border-radius: 0.625em;
+  padding: 1.25em;
+  margin: 0.5em;
+
+  .heading {
+    font: {
+      size: 1.5rem;
+      weight: 500;
+      style: normal;
+    }
+  }
+
+  .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0.625em;
+    border: none;
+    padding: 0.5em;
+    background: transparent;
+    cursor: pointer;
+    gap: 0.625em;
+
+    .text {
+      font-weight: 500;
+    }
+
+    .icon {
+      font-size: 2rem;
+    }
+  }
+}

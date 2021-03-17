@@ -1,9 +1,9 @@
-import { Input } from '../components';
+import { ChooseLocation } from '../components';
 
 const Home = () => {
   return (
     <main className="main">
-      <Input />
+      <ChooseLocation />
     </main>
   );
 };

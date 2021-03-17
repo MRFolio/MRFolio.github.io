@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 const WeatherContext = createContext(null);
 
@@ -68,18 +62,27 @@ const WeatherProvider = ({ children }) => {
       return formattedData;
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    if (currentLocation.lat && currentLocation.lon) {
-      getWeatherForecast(currentLocation.lat, currentLocation.lon);
-    }
-  }, [currentLocation, getWeatherForecast]);
+  // useEffect(() => {
+  //   if (currentLocation.lat && currentLocation.lon) {
+  //     getWeatherForecast(currentLocation.lat, currentLocation.lon);
+  //   }
+  // }, [currentLocation, getWeatherForecast]);
 
   return (
     <WeatherContext.Provider
-      value={{ setCurrentLocation, locationWeather, loading, error, setError }}
+      value={{
+        locationWeather,
+        loading,
+        error,
+        setError,
+        setLoading,
+        setCurrentLocation,
+      }}
     >
       {children}
     </WeatherContext.Provider>

@@ -9,7 +9,7 @@ Weather app built with React using [OpenWeatherMap API](https://openweathermap.o
 ### Technologies used:
 
 - **ReactJS**
-- **Material-UI** for styling and components
-- **React Router** for routing
+- **React Router**
+- **SCSS**
 
 ---
