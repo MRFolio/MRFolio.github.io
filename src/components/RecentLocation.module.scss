@@ -8,7 +8,7 @@
   background: #f9f9f9;
   border-radius: 0.625em;
   padding: 1.25em;
-  margin: 0.5em;
+  margin: 0.5em 0;
 
   .heading {
     font: {
@@ -29,6 +29,7 @@
     background: transparent;
     cursor: pointer;
     gap: 0.625em;
+    transition: 0.3s color ease-out;
 
     .text {
       font-weight: 500;
@@ -36,6 +37,10 @@
 
     .icon {
       font-size: 2rem;
+    }
+
+    &:hover {
+      color: #6960e4;
     }
   }
 }

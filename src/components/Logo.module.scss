@@ -1,0 +1,34 @@
+.logoContainer {
+  width: 226.63px;
+  height: 77.82px;
+  position: relative;
+
+  .firstRow {
+    transform: rotate(-4.46deg);
+    font: {
+      style: normal;
+      weight: normal;
+      size: 1.5rem;
+    }
+  }
+
+  .strikethroughLine {
+    position: absolute;
+    width: 84.29px;
+    height: 3px;
+    left: 95px;
+    top: 11.5px;
+    background-color: #000;
+    transform: rotate(1.14deg);
+  }
+
+  .secondRow {
+    transform: rotate(-6.96deg);
+    font: {
+      family: Architects Daughter;
+      style: normal;
+      weight: normal;
+      size: 3.4375rem;
+    }
+  }
+}

@@ -1,19 +1,42 @@
-.locationBtn {
-  border: none;
-  padding: 0.5em;
-  background: transparent;
-  cursor: pointer;
+.header {
+  // height: 22.66vh;
+  height: 204px;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 3.1525em;
+}
 
-  .locationBtnText {
-    font-size: 0.75rem;
-    border-bottom: 1px solid #000;
+.locationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .locationBtn {
+    border: none;
+    padding: 0.5em;
+    background: transparent;
+    cursor: pointer;
+
+    .locationBtnText {
+      font-size: 0.75rem;
+      border-bottom: 1px solid #000;
+    }
   }
 }
 
-.headingRecent {
-  font: {
-    size: 0.75rem;
-    weight: 400;
-    style: normal;
+.recentlyContainer {
+  margin: 0.5em;
+  // gap: 0.5em;
+  // display: grid;
+  // grid-template-columns: repeat(2, 1fr);
+  .headingRecent {
+    margin: 0.5em 0;
+    font: {
+      size: 0.75rem;
+      weight: 400;
+      style: normal;
+    }
   }
 }

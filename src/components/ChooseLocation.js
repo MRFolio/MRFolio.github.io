@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './ChooseLocation.module.scss';
-import { RecentLocation, Spinner } from './index';
+import { Logo, RecentLocation, Spinner } from './index';
 
 const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
@@ -170,35 +170,41 @@ const Input = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="userInput"
-          id="userInput"
-          placeholder="Enter location"
-          value={userInput}
-          onChange={handleChange}
-        />
-      </form>
-      <button
-        className={styles.locationBtn}
-        type="button"
-        onClick={handleClick}
-      >
-        <span className={styles.locationBtnText}>
-          Select my current location
-        </span>
-      </button>
+      <header className={styles.header}>
+        <Logo />
+      </header>
+      <section className={styles.locationContainer}>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="userInput"
+            id="userInput"
+            placeholder="Enter location"
+            value={userInput}
+            onChange={handleChange}
+          />
+        </form>
+        <button
+          className={styles.locationBtn}
+          type="button"
+          onClick={handleClick}
+        >
+          <span className={styles.locationBtnText}>
+            Select my current location
+          </span>
+        </button>
+      </section>
+
       {setGeoLocationStatus && (
         <p className={styles.geoLocationStatus}>{geoLocationStatus}</p>
       )}
       {recentlyViewed && (
-        <>
-          <h3 className={styles.headingRecent}>Recently viewed</h3>
+        <section className={styles.recentlyContainer}>
+          <h2 className={styles.headingRecent}>Recently viewed</h2>
           {recentlyViewed.map((location) => (
             <RecentLocation key={location} location={location} />
           ))}
-        </>
+        </section>
       )}
     </>
   );
