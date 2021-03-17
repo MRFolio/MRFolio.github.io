@@ -1,17 +1,25 @@
+@use "../styles/base" as b;
+
 .locationContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform: translateY(-38%);
+  transform: translateY(-32px);
   // .form {
   //   position: absolute;
   // }
 
   .locationBtn {
+    // margin: 1em 0;
     border: none;
-    padding: 0.5em;
+    padding: 0.625em;
     background: transparent;
     cursor: pointer;
+    transform: 0.25s color ease-out;
+
+    &:hover {
+      color: b.$hoverColor;
+    }
 
     .locationBtnText {
       font-size: 0.75rem;

@@ -173,7 +173,9 @@ const ChooseLocation = () => {
           type="button"
           onClick={handleClick}
         >
-          <p className={styles.locationBtnText}>Select my current location</p>
+          <span className={styles.locationBtnText}>
+            Select my current location
+          </span>
         </button>
       </section>
       {error && <p className={styles.geoLocationStatus}>{error}</p>}

@@ -1,47 +1,99 @@
 @use "../styles/base" as b;
 
-.input {
-  @extend %locationShadow;
-  width: 501px;
-  height: 58px;
-  border: none;
-  margin: 1.5em 0;
-  padding: 0 2.625em;
+.inputContainer {
+  position: relative;
 
-  &::placeholder {
-    font-size: 1.125rem;
-    color: #bdbdbd;
-  }
+  .input {
+    @extend %locationShadow;
+    width: 501px;
+    height: 58px;
+    border: none;
+    // margin: 1.5em 0;
+    padding: 0 2.625em;
 
-  &:focus {
-    outline: none; // Should not be used normally, but I wanted the UI to look exactly like in the Figma file.
+    @include b.mediaQuery(b.$mobile) {
+      width: 98%;
+    }
+
+    &::placeholder {
+      font-size: 1.125rem;
+      color: #bdbdbd;
+    }
+
+    &:focus {
+      outline: none; // Should actually never be used because of accessibility, but I wanted the UI to look exactly like in the Figma file.
+    }
   }
 }
 
 .clearBtn {
+  position: absolute;
+  top: 50%;
+  font-size: 0.75rem;
   padding: 0.625em 0.75em;
+  background: transparent;
+  color: #706d6d;
+  border: none;
+  cursor: pointer;
 }
 
 .icon {
   position: absolute;
-  left: 21%;
-  top: 31%;
+  left: 3%;
+  top: 34%;
   font-size: 1.125rem;
   color: #828282;
+
+  &.active {
+    color: black;
+  }
 }
 
 .suggestionsContainer {
-  width: 100%;
+  @extend %locationShadow;
+  width: 501px;
+  max-height: 272px;
   transform: all 0.1s ease-out;
+  margin: 1.5em 0;
+  overflow-y: hidden;
+
+  @include b.mediaQuery(b.$mobile) {
+    width: 98%;
+  }
 
   .suggestionsList {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 1em;
+    padding: 1.25em 1em;
   }
 
   .suggestion {
+    position: relative;
+    width: 100%;
+    color: #111111;
+    padding: 0.875em 0.75em;
+    border-radius: 0.25em;
+    list-style: none;
+    cursor: pointer;
+
+    &:hover {
+      background: #f2f2f2;
+    }
+
     &.active {
+      background: #f2f2f2;
+
+      &:after {
+        position: absolute;
+        content: 'Press Enter to select';
+        font-size: 0.75rem;
+        color: #706d6d;
+        top: 50%;
+        right: 2%;
+        transform: translate(-2%, -50%);
+      }
     }
   }
 }

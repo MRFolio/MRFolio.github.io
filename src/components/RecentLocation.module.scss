@@ -1,3 +1,5 @@
+@use "../styles/base" as b;
+
 .container {
   max-width: 442px;
   max-height: 92px;
@@ -40,7 +42,7 @@
     }
 
     &:hover {
-      color: #6960e4;
+      color: b.$hoverColor;
     }
   }
 }
