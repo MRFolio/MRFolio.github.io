@@ -48,10 +48,10 @@
 .icon {
   position: absolute;
   left: 0.9em;
-  top: 49%;
+  top: 50%;
   font-size: 1.125rem;
   color: #828282;
-  transform: translateY(-49%);
+  transform: translateY(-50%);
 
   &.active {
     color: #4f4f4f;
@@ -85,10 +85,13 @@
     padding: 0.875em 0.75em;
     border-radius: 0.25em;
     list-style: none;
-    cursor: pointer;
 
     &:hover:not(:last-of-type) {
       background: #f2f2f2;
+    }
+
+    &:not(:last-of-type) {
+      cursor: pointer;
     }
 
     &.active {

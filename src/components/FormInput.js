@@ -29,7 +29,13 @@ const FormInput = memo(({ recentlyViewed, setRecentlyViewed }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (userInput && userInput.length > 2) {
+    if (
+      userInput &&
+      userInput.length > 2 &&
+      filteredSuggestions
+        .slice(0, filteredSuggestions.length - 1)
+        .includes(userInput)
+    ) {
       setRecentlyViewed([...recentlyViewed, userInput]);
       // const newStorage = [...recentlyViewed, userInput];
       // localStorage.setItem('recentlyViewed', JSON.stringify(newStorage));
@@ -55,7 +61,7 @@ const FormInput = memo(({ recentlyViewed, setRecentlyViewed }) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      setUserInput(filteredSuggestions[activeSuggestion]);
+      // setUserInput(filteredSuggestions[activeSuggestion]);
       setActiveSuggestion(0);
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
@@ -70,10 +76,44 @@ const FormInput = memo(({ recentlyViewed, setRecentlyViewed }) => {
     }
   };
 
-  const handleSuggestionClick = (e) => {
-    setActiveSuggestion(0);
-    setFilteredSuggestions([]);
-    setUserInput(e.currentTarget.textContent);
+  const geocode = async (city) => {
+    const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
+    // setLoading(true);
+
+    try {
+      const response = await fetch(geoUrl);
+      const data = await response.json();
+
+      if (data) {
+        const { lat, lon } = data[0];
+        history.push(`/location/${city}_${lat}_${lon}`);
+      }
+
+      // setLocation(data[0].name);
+      // setUserInput(data[0].name);
+      // if (locationCoordinates) {
+      // history.push({
+      //   pathname: `/location/${userInput}_${lat}_${lon}`,
+      //     pathname: `/location/${lat}_${lon}`,
+      //     state: { locationName },
+      //   });
+      // }
+
+      return data;
+    } catch (error) {
+      // setError(error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  const handleSuggestionClick = async (e, index) => {
+    if (index !== filteredSuggestions.length - 1) {
+      setActiveSuggestion(0);
+      setFilteredSuggestions([]);
+      setUserInput(e.currentTarget.textContent);
+      await geocode(e.currentTarget.textContent);
+    }
   };
 
   const handleClearClick = () => {
@@ -116,7 +156,7 @@ const FormInput = memo(({ recentlyViewed, setRecentlyViewed }) => {
           </button>
         )}
       </div>
-      {userInput && filteredSuggestions.length > 0 && (
+      {userInput && filteredSuggestions.length > 1 && (
         <div className={styles.suggestionsContainer}>
           <ul className={styles.suggestionsList}>
             {filteredSuggestions?.map((suggestion, index) => (
@@ -125,7 +165,7 @@ const FormInput = memo(({ recentlyViewed, setRecentlyViewed }) => {
                   index === activeSuggestion && styles.active
                 }`}
                 key={suggestion}
-                onClick={handleSuggestionClick}
+                onClick={(e) => handleSuggestionClick(e, index)}
               >
                 {suggestion}
               </li>

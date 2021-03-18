@@ -11,10 +11,10 @@ const getLocalStorage = () =>
     : [];
 
 const ChooseLocation = () => {
-  const history = useHistory();
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const [recentlyViewed, setRecentlyViewed] = useState(getLocalStorage());
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const history = useHistory();
 
   // const {
   //   loading,
@@ -102,24 +102,6 @@ const ChooseLocation = () => {
       return data[0].name;
     } catch (error) {
       setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const geocode = async (city) => {
-    const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
-    setLoading(true);
-
-    try {
-      const response = await fetch(geoUrl);
-      const data = await response.json();
-      // setLocation(data[0].name);
-      // setUserInput(data[0].name);
-
-      return data;
-    } catch (error) {
-      setError(error);
     } finally {
       setLoading(false);
     }
