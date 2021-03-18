@@ -14,7 +14,7 @@
     width: 501px;
     height: 58px;
     border: none;
-    padding: 0 4.625em 0 2.625em;
+    padding: 0 4.625em 0 2.54em;
     color: #111111;
 
     @include b.mediaQuery(b.$mobile) {
@@ -34,9 +34,11 @@
   .clearBtn {
     position: absolute;
     top: 50%;
-    right: 0.625em;
+    right: 0.5em;
+    // right: 1.25em;
     font-size: 0.75rem;
     padding: 0.625em 0.75em;
+    padding: 1.04em 1.01em;
     background: transparent;
     color: #706d6d;
     border: none;
@@ -48,10 +50,10 @@
 .icon {
   position: absolute;
   left: 0.9em;
-  top: 50%;
+  top: 49%;
   font-size: 1.125rem;
   color: #828282;
-  transform: translateY(-50%);
+  transform: translateY(-49%);
 
   &.active {
     color: #4f4f4f;

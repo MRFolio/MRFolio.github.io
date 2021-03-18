@@ -13,6 +13,8 @@ const DailyForecastCard = ({ index, icon, temp, time, wind_speed }) => {
         className={styles.icon}
       /> */}
       <p className={styles.icon}>{formatIcon(icon)}</p>
+      <p className={styles.temp}>{temp.toFixed(1)}&#176;C</p>
+      <p className={styles.wind}>{wind_speed.toFixed(0)} m/s</p>
     </div>
   );
 };

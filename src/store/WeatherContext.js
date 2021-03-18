@@ -71,7 +71,7 @@ const WeatherProvider = ({ children }) => {
 
   //     return formattedData;
   //   } catch (error) {
-  //     setError(error.message);
+  //     setError(error);
   //   } finally {
   //     setLoading(false);
   //   }

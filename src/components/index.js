@@ -1,4 +1,5 @@
 export { default as ChooseLocation } from './ChooseLocation';
+export { default as Error } from './Error';
 export { default as FormInput } from './FormInput';
 export { default as Logo } from './Logo';
 export { default as RecentLocation } from './RecentLocation';

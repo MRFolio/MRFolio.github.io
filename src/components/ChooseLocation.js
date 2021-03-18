@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FormInput, RecentLocation, Spinner } from '../components';
 import styles from './ChooseLocation.module.scss';
+import Error from './Error';
 
 const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
@@ -33,6 +34,7 @@ const ChooseLocation = () => {
   useEffect(() => {
     // const removeDuplicates = [...new Set(recentlyViewed)];
     // setRecentlyViewed((prevViewed)=>);
+    // const filtered = recentlyViewed.filter(Boolean);
     localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
   }, [recentlyViewed]);
   // const [locationName, setLocationName] = useState('');
@@ -144,10 +146,6 @@ const ChooseLocation = () => {
 
   if (loading) return <Spinner />;
 
-  if (error) {
-    return <p>Cannot display weather...</p>;
-  }
-
   return (
     <>
       <section className={styles.locationContainer}>
@@ -158,6 +156,7 @@ const ChooseLocation = () => {
         <button
           className={styles.locationBtn}
           type="button"
+          aria-label="Select my current location for weather information"
           onClick={handleClick}
         >
           <span className={styles.locationBtnText}>
@@ -165,7 +164,7 @@ const ChooseLocation = () => {
           </span>
         </button>
       </section>
-      {error && <p className={styles.geoLocationStatus}>{error}</p>}
+      {error && <Error message={error} />}
       {recentlyViewed && (
         <section className={styles.recentlyContainer}>
           <h2 className={styles.headingRecent}>Recently viewed</h2>

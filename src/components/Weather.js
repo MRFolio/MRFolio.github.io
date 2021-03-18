@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Spinner, WeatherCard } from '../components';
+import { BsArrowLeft } from 'react-icons/bs';
+import { useHistory, useParams } from 'react-router-dom';
+import { Error, FormInput, Logo, Spinner, WeatherCard } from '../components';
 import styles from './Weather.module.scss';
 
 const Weather = ({ location }) => {
@@ -10,6 +11,7 @@ const Weather = ({ location }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { coordinates } = useParams();
+  const history = useHistory();
 
   const url_Array = coordinates.split('_');
   const locationName = url_Array[0];
@@ -37,48 +39,52 @@ const Weather = ({ location }) => {
       const response = await fetch(url);
       const data = await response.json();
 
-      const {
-        dt,
-        temp,
-        feels_like,
-        pressure,
-        humidity,
-        wind_deg,
-        wind_speed,
-        weather: [{ icon }],
-      } = data.current;
-
-      const currentWeather = {
-        time: dt,
-        temp,
-        feels_like,
-        pressure,
-        humidity,
-        wind_deg,
-        wind_speed,
-        icon: icon.slice(0, -1),
-      };
-
-      const forecast = data.daily.slice(1).map((item) => {
+      if (response.ok) {
         const {
           dt,
-          weather: [{ icon }],
-          temp: { day },
+          temp,
+          feels_like,
+          pressure,
+          humidity,
+          wind_deg,
           wind_speed,
-        } = item;
+          weather: [{ icon }],
+        } = data.current;
 
-        return { time: dt, icon: icon.slice(0, -1), temp: day, wind_speed };
-      });
+        const currentWeather = {
+          time: dt,
+          temp,
+          feels_like,
+          pressure,
+          humidity,
+          wind_deg,
+          wind_speed,
+          icon: icon.slice(0, -1),
+        };
 
-      const formattedData = {
-        currentWeather,
-        forecast,
-      };
-      setLocationWeather(formattedData);
+        const forecast = data.daily.slice(1).map((item) => {
+          const {
+            dt,
+            weather: [{ icon }],
+            temp: { day },
+            wind_speed,
+          } = item;
 
-      return formattedData;
+          return { time: dt, icon: icon.slice(0, -1), temp: day, wind_speed };
+        });
+
+        const formattedData = {
+          currentWeather,
+          forecast,
+        };
+        setLocationWeather(formattedData);
+      } else {
+        throw 'Bad API request.';
+      }
+
+      return data;
     } catch (error) {
-      setError(error.message);
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -108,24 +114,52 @@ const Weather = ({ location }) => {
   // } = locationWeather;
   // console.log(temp);
 
-  if (loading) return <Spinner />;
+  const handleBackClick = () => {
+    history.push('/');
+  };
 
-  if (error || !locationWeather) {
-    return <p>Cannot display weather. {error}</p>;
-  }
+  const renderWeather = () => {
+    if (loading) return <Spinner />;
+
+    if (error || !locationWeather) {
+      return <Error message={error} />;
+    }
+    return (
+      <section className={styles.weatherContainer}>
+        <article className={styles.currentWeather}>
+          <div className={styles.leftContainer}></div>
+          <div className={styles.rightContainer}></div>
+        </article>
+        <div className={styles.cardsContainer}>
+          {locationWeather?.forecast?.map((day, index) => (
+            <WeatherCard key={day.time} index={index} {...day} />
+          ))}
+        </div>
+      </section>
+    );
+  };
 
   return (
-    <section className={styles.container}>
-      <article className={styles.currentWeather}>
-        <div className={styles.leftContainer}></div>
-        <div className={styles.rightContainer}></div>
-      </article>
-      <div className={styles.cardsContainer}>
-        {locationWeather?.forecast?.map((day, index) => (
-          <WeatherCard key={day.time} index={index} {...day} />
-        ))}
-      </div>
-    </section>
+    <>
+      <header className={styles.weatherHeader}>
+        <div className={styles.logoContainer}>
+          <Logo />
+        </div>
+        <div className={styles.locationContainer}>
+          <button
+            className={styles.backBtn}
+            aria-label="Navigate back to homepage"
+            title="Navigate back to homepage"
+            type="button"
+            onClick={handleBackClick}
+          >
+            <BsArrowLeft />
+          </button>
+          <FormInput locationName={locationName} />
+        </div>
+      </header>
+      {renderWeather()}
+    </>
   );
 };
 
