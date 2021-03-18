@@ -1,7 +1,15 @@
+@use "../styles/base" as b;
+
 .logoContainer {
   width: 226.63px;
   height: 77.82px;
   position: relative;
+
+  @include b.mediaQuery(b.$tablet) {
+    top: -10%;
+    left: 50%;
+    transform: translate(-50%, 10%);
+  }
 
   .firstRow {
     transform: rotate(-4.46deg);

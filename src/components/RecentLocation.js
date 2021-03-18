@@ -11,13 +11,13 @@ const RecentLocation = ({ location }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <li className={styles.container}>
       <h3 className={styles.heading}>{location}</h3>
       <button type="button" onClick={handleClick} className={styles.button}>
         <span className={styles.text}>Check weather</span>
         <BsArrowRight className={styles.icon} />
       </button>
-    </div>
+    </li>
   );
 };
 

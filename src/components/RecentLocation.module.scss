@@ -6,7 +6,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //   padding: 0.625em;
   background: #f9f9f9;
   border-radius: 0.625em;
   padding: 1.25em;
@@ -18,6 +17,7 @@
       weight: 500;
       style: normal;
     }
+    text-transform: capitalize;
   }
 
   .button {

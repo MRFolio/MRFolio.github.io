@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import styles from './Error.module.scss';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import styles from './ErrorMessage.module.scss';
 
 const Error = ({ message }) => {
   const [visible, setVisible] = useState(false);
@@ -13,7 +14,7 @@ const Error = ({ message }) => {
     setVisible(true);
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 6500);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [message]);
@@ -21,12 +22,11 @@ const Error = ({ message }) => {
   if (!visible) return null;
 
   return (
-    <>
-      <p className={styles.errorMessage}>
-        <strong>Something went wrong!</strong>
-      </p>
-      <p className={styles.reason}>{message}</p>
-    </>
+    <p className={styles.errorMessage}>
+      <RiErrorWarningFill className={styles.icon} />
+      <strong>{message}</strong>
+      <RiErrorWarningFill className={styles.icon} />
+    </p>
   );
 };
 

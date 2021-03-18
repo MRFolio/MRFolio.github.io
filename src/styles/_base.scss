@@ -4,7 +4,7 @@ $hoverColor: #6960e4;
 // breakpoints
 $big-screen: 1180px;
 $tablet: 960px;
-$mobile: 600px;
+$mobile: 660px;
 
 // mixins
 @mixin mediaQuery($breakpoint, $minOrMaxWidth: max-width) {

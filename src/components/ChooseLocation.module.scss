@@ -29,15 +29,13 @@
 }
 
 .recentlyContainer {
-  margin: 0.5em;
-  // gap: 0.5em;
-  // display: grid;
-  // grid-template-columns: repeat(2, 1fr);
+  margin: 6.8125em 0.75em 0;
+
   .headingRecent {
     margin: 0.5em 0;
     font: {
       size: 0.75rem;
-      weight: 400;
+      weight: normal;
       style: normal;
     }
   }

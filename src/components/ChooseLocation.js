@@ -1,107 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FormInput, RecentLocation, Spinner } from '../components';
+import {
+  ErrorMessage,
+  FormInput,
+  RecentLocation,
+  Spinner,
+} from '../components';
+import { useWeatherContext } from '../store/WeatherContext';
 import styles from './ChooseLocation.module.scss';
-import Error from './Error';
 
-const API_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
-
-const getLocalStorage = () =>
-  localStorage.getItem('recentlyViewed')
-    ? JSON.parse(localStorage.getItem('recentlyViewed'))
-    : [];
+const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/reverse?';
 
 const ChooseLocation = () => {
-  const [recentlyViewed, setRecentlyViewed] = useState(getLocalStorage());
+  const {
+    recentlyViewed,
+    addLocationToRecentlyViewedList,
+  } = useWeatherContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
 
-  // const {
-  //   loading,
-  //   error,
-  //   setError,
-  //   setLoading,
-  //   setCurrentLocation,
-  //   locationWeather,
-  // } = useWeatherContext();
-  // const [userInput, setUserInput] = useState('');
-  // const [activeSuggestion, setActiveSuggestion] = useState(0);
-  // const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-
-  const [geoLocationStatus, setGeoLocationStatus] = useState('');
-
-  useEffect(() => {
-    // const removeDuplicates = [...new Set(recentlyViewed)];
-    // setRecentlyViewed((prevViewed)=>);
-    // const filtered = recentlyViewed.filter(Boolean);
-    localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
-  }, [recentlyViewed]);
-  // const [locationName, setLocationName] = useState('');
-
-  // const { setUrl, locationName, loading, error } = useGeocode('');
-
-  // Local Storage
-  // useEffect(() => {
-  //   const value = cu;
-  //   localStorage.setItem('location', value);
-  // }, [currentWeather]);
-
-  // useEffect(() => {
-  //   const fetchCurrentCityWeather = async (city) => {
-  //     const url = `${API_BASE_URL}?&q=${city}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
-  //     setLoading(true);
-
-  //     try {
-  //       const response = await fetch(url);
-  //       const data = await response.json();
-  //       if (data) {
-  //       } else {
-  //         setError('Something went wrong. Nothing to show.');
-  //       }
-  //     } catch (error) {
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCurrentCityWeather('tartu');
-  // }, [query]);
-
-  // Local Storage
-  // const addQueryToStorage = () => {
-  //   let queryList = JSON.parse(localStorage.getItem('recentlyViewed'));
-
-  //   const addToStorage = () => {
-  //     queryList.push(userInput);
-  //   };
-
-  //   const removeAndAddToStorage = () => {
-  //     queryList.shift();
-  //     addToStorage();
-  //   };
-
-  //   queryList.length === 5 ? removeAndAddToStorage() : addToStorage();
-  //   localStorage.setItem('recentlyViewed', JSON.stringify(queryList));
-  // };
-
-  // const addtoEmptyStorage = () => {
-  //   let queriesList = [];
-  //   queriesList.push(userInput);
-  //   localStorage.setItem('recentlyViewed', JSON.stringify(queriesList));
-  // };
-
   const reverseGeocode = async (latitude, longitude) => {
-    const reverseGeoUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
-    setLoading(true);
+    const reverseGeoUrl = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
     setError(undefined);
+    setLoading(true);
 
     try {
       const response = await fetch(reverseGeoUrl);
       const data = await response.json();
-      // setLocationName(data[0].name);
-      return data[0].name;
+
+      if (response.ok) {
+        return data[0].name;
+      } else {
+        throw new Error("Can't find location");
+      }
     } catch (error) {
       setError(error.message);
     } finally {
@@ -118,7 +50,12 @@ const ChooseLocation = () => {
       // console.log(locationName);
       const locationName = await reverseGeocode(lat, lon);
       // setCurrentLocation({ lat, lon });
-      history.push('/tere');
+      if (locationName) {
+        addLocationToRecentlyViewedList(locationName);
+        // setRecentlyViewed([...recentlyViewed, location])
+        history.push(`/location/${locationName}_${lat}_${lon}`);
+      }
+
       // if (locationName) {
       //   history.push({
       //     pathname: `/location/${locationName}_${lat}_${lon}`,
@@ -149,10 +86,7 @@ const ChooseLocation = () => {
   return (
     <>
       <section className={styles.locationContainer}>
-        <FormInput
-          recentlyViewed={recentlyViewed}
-          setRecentlyViewed={setRecentlyViewed}
-        />
+        <FormInput />
         <button
           className={styles.locationBtn}
           type="button"
@@ -164,17 +98,19 @@ const ChooseLocation = () => {
           </span>
         </button>
       </section>
-      {error && <Error message={error} />}
+      {error && <ErrorMessage message={error} />}
       {recentlyViewed && (
         <section className={styles.recentlyContainer}>
           <h2 className={styles.headingRecent}>Recently viewed</h2>
-          {recentlyViewed
-            .slice(0)
-            .reverse()
-            .slice(0, 5)
-            .map((location, i) => (
-              <RecentLocation key={i} location={location} />
-            ))}
+          <ul>
+            {recentlyViewed
+              .slice(0)
+              .reverse()
+              .slice(0, 5)
+              .map((location, i) => (
+                <RecentLocation key={i} location={location} />
+              ))}
+          </ul>
         </section>
       )}
     </>
