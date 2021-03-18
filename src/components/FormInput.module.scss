@@ -1,5 +1,11 @@
 @use "../styles/base" as b;
 
+.form {
+  @include b.mediaQuery(b.$mobile) {
+    width: 90%;
+  }
+}
+
 .inputContainer {
   position: relative;
 
@@ -8,11 +14,11 @@
     width: 501px;
     height: 58px;
     border: none;
-    // margin: 1.5em 0;
-    padding: 0 2.625em;
+    padding: 0 4.625em 0 2.625em;
+    color: #111111;
 
     @include b.mediaQuery(b.$mobile) {
-      width: 98%;
+      width: 100%;
     }
 
     &::placeholder {
@@ -24,28 +30,31 @@
       outline: none; // Should actually never be used because of accessibility, but I wanted the UI to look exactly like in the Figma file.
     }
   }
-}
 
-.clearBtn {
-  position: absolute;
-  top: 50%;
-  font-size: 0.75rem;
-  padding: 0.625em 0.75em;
-  background: transparent;
-  color: #706d6d;
-  border: none;
-  cursor: pointer;
+  .clearBtn {
+    position: absolute;
+    top: 50%;
+    right: 0.625em;
+    font-size: 0.75rem;
+    padding: 0.625em 0.75em;
+    background: transparent;
+    color: #706d6d;
+    border: none;
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
 }
 
 .icon {
   position: absolute;
-  left: 3%;
-  top: 34%;
+  left: 0.9em;
+  top: 49%;
   font-size: 1.125rem;
   color: #828282;
+  transform: translateY(-49%);
 
   &.active {
-    color: black;
+    color: #4f4f4f;
   }
 }
 
@@ -54,11 +63,11 @@
   width: 501px;
   max-height: 272px;
   transform: all 0.1s ease-out;
-  margin: 1.5em 0;
+  margin-top: 1.5em;
   overflow-y: hidden;
 
   @include b.mediaQuery(b.$mobile) {
-    width: 98%;
+    width: 100%;
   }
 
   .suggestionsList {
@@ -78,7 +87,7 @@
     list-style: none;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(:last-of-type) {
       background: #f2f2f2;
     }
 

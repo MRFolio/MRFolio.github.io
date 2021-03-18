@@ -27,10 +27,12 @@ const ChooseLocation = () => {
   // const [userInput, setUserInput] = useState('');
   // const [activeSuggestion, setActiveSuggestion] = useState(0);
   // const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  // const [showSuggestions, setShowSuggestions] = useState(false);
+
   const [geoLocationStatus, setGeoLocationStatus] = useState('');
 
   useEffect(() => {
+    // const removeDuplicates = [...new Set(recentlyViewed)];
+    // setRecentlyViewed((prevViewed)=>);
     localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
   }, [recentlyViewed]);
   // const [locationName, setLocationName] = useState('');
@@ -167,7 +169,10 @@ const ChooseLocation = () => {
   return (
     <>
       <section className={styles.locationContainer}>
-        <FormInput />
+        <FormInput
+          recentlyViewed={recentlyViewed}
+          setRecentlyViewed={setRecentlyViewed}
+        />
         <button
           className={styles.locationBtn}
           type="button"
@@ -185,8 +190,9 @@ const ChooseLocation = () => {
           {recentlyViewed
             .slice(0)
             .reverse()
-            .map((location) => (
-              <RecentLocation key={location} location={location} />
+            .slice(0, 5)
+            .map((location, i) => (
+              <RecentLocation key={i} location={location} />
             ))}
         </section>
       )}
