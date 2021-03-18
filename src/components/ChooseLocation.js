@@ -104,7 +104,7 @@ const ChooseLocation = () => {
           <h2 className={styles.headingRecent}>Recently viewed</h2>
           <ul>
             {recentlyViewed
-              .slice(0)
+              ?.slice(0)
               .reverse()
               .slice(0, 5)
               .map((location, i) => (

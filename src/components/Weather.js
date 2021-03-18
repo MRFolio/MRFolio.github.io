@@ -10,10 +10,13 @@ import {
 } from '../components';
 import styles from './Weather.module.scss';
 
+const API_ENDPOINT = 'https://api.openweathermap.org/data/2.5/onecall?';
+const API_EXCLUDE = '&exclude=hourly,minutely,alerts';
+
 const Weather = () => {
   const [locationWeather, setLocationWeather] = useState({});
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const { coordinates } = useParams();
   const history = useHistory();
 
@@ -23,7 +26,7 @@ const Weather = () => {
   const lon = url_Array[2];
 
   const getWeatherForecast = useCallback(async (latitude, longitude) => {
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+    const url = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}${API_EXCLUDE}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
     setError(undefined);
     setLoading(true);
 

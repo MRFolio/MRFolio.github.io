@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiLocationMarker, HiOutlineLocationMarker } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 import { ErrorMessage, Spinner } from '../components';
@@ -8,10 +8,11 @@ import styles from './FormInput.module.scss';
 
 const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/direct?q=';
 
-const FormInput = memo(({ locationName }) => {
+const FormInput = ({ locationName }) => {
   const [userInput, setUserInput] = useState(locationName || '');
   const [activeSuggestion, setActiveSuggestion] = useState(0);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { addLocationToRecentlyViewedList } = useWeatherContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,11 +41,7 @@ const FormInput = memo(({ locationName }) => {
 
   const handleChange = (e) => {
     const input = e.target.value;
-    // const filteredSuggestions = citiesList
-    //   .filter(
-    //     (city) => city.toLowerCase().indexOf(input.trim().toLowerCase()) > -1
-    //   )
-    //   .slice(0, 3);
+
     const filteredSuggestions = citiesList
       .filter((city) =>
         city.toLowerCase().startsWith(input.trim().toLowerCase())
@@ -53,6 +50,7 @@ const FormInput = memo(({ locationName }) => {
     const inputLettersAdded = [...filteredSuggestions, input + '....'];
 
     setFilteredSuggestions(inputLettersAdded);
+    setShowSuggestions(true);
     setActiveSuggestion(0);
     setUserInput(input);
   };
@@ -70,7 +68,7 @@ const FormInput = memo(({ locationName }) => {
         throw new Error("Can't find such location");
       }
 
-      if (data && location.length > 2) {
+      if (data) {
         addLocationToRecentlyViewedList(location);
         const { lat, lon } = data[0];
         history.push(`/location/${location}_${lat}_${lon}`);
@@ -85,29 +83,33 @@ const FormInput = memo(({ locationName }) => {
   };
 
   const handleKeyDown = async (e) => {
-    if (e.keyCode === 13) {
-      // enter
-      const currentSuggestion = filteredSuggestions[activeSuggestion];
-      setActiveSuggestion(0);
+    switch (e.keyCode) {
+      case 13: // enter
+        const currentSuggestion = filteredSuggestions[activeSuggestion];
+        setActiveSuggestion(0);
+        setShowSuggestions(false);
 
-      if (filteredSuggestions.length > 1) {
-        setUserInput(currentSuggestion);
-        await geocode(currentSuggestion);
-      }
-
-      await geocode(userInput);
-    } else if (e.keyCode === 38) {
-      // up arrow
-      if (activeSuggestion === 0) {
-        return;
-      }
-      setActiveSuggestion(activeSuggestion - 1);
-    } else if (e.keyCode === 40) {
-      // down arrow
-      if (filteredSuggestions.length - 2 === activeSuggestion) {
-        return;
-      }
-      setActiveSuggestion(activeSuggestion + 1);
+        if (filteredSuggestions.length > 1) {
+          setUserInput(currentSuggestion);
+          await geocode(currentSuggestion);
+        } else {
+          await geocode(userInput);
+        }
+        break;
+      case 38: // up arrow
+        if (activeSuggestion === 0) {
+          return;
+        }
+        setActiveSuggestion(activeSuggestion - 1);
+        break;
+      case 40: // down arrow
+        if (filteredSuggestions.length - 2 === activeSuggestion) {
+          return;
+        }
+        setActiveSuggestion(activeSuggestion + 1);
+        break;
+      default:
+        break;
     }
   };
 
@@ -115,6 +117,7 @@ const FormInput = memo(({ locationName }) => {
     if (index !== filteredSuggestions.length - 1) {
       setActiveSuggestion(0);
       setFilteredSuggestions([]);
+      setShowSuggestions(false);
       setUserInput(e.currentTarget.textContent);
       await geocode(e.currentTarget.textContent);
     }
@@ -160,7 +163,7 @@ const FormInput = memo(({ locationName }) => {
           </button>
         )}
       </div>
-      {userInput && filteredSuggestions.length > 1 && (
+      {userInput && showSuggestions && filteredSuggestions.length > 1 && (
         <div className={styles.suggestionsContainer}>
           <ul className={styles.suggestionsList}>
             {filteredSuggestions?.map((suggestion, index) => (
@@ -181,6 +184,6 @@ const FormInput = memo(({ locationName }) => {
       {error && <ErrorMessage message={error} />}
     </form>
   );
-});
+};
 
 export default FormInput;

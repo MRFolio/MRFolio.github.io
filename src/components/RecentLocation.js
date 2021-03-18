@@ -1,19 +1,21 @@
 import { BsArrowRight } from 'react-icons/bs';
-import { useHistory } from 'react-router-dom';
 import styles from './RecentLocation.module.scss';
 
 const RecentLocation = ({ location }) => {
-  const history = useHistory();
-
-  const handleClick = () => {
-    const city = 'Tartu';
-    history.push(`/location/${city}`);
+  const handleClick = async () => {
+    // await geocode(location);
   };
 
   return (
     <li className={styles.container}>
       <h3 className={styles.heading}>{location}</h3>
-      <button type="button" onClick={handleClick} className={styles.button}>
+      <button
+        type="button"
+        aria-label={`Check ${location} weather forecast`}
+        title={`Check ${location} weather forecast`}
+        onClick={handleClick}
+        className={styles.button}
+      >
         <span className={styles.text}>Check weather</span>
         <BsArrowRight className={styles.icon} />
       </button>
