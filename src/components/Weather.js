@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useHistory, useParams } from 'react-router-dom';
 import {
+  CurrentWeather,
   ErrorMessage,
-  FormInput,
+  Forecast,
+  Form,
   Logo,
   Spinner,
-  WeatherCard,
 } from '../components';
 import styles from './Weather.module.scss';
 
@@ -14,7 +15,8 @@ const API_ENDPOINT = 'https://api.openweathermap.org/data/2.5/onecall?';
 const API_EXCLUDE = '&exclude=hourly,minutely,alerts';
 
 const Weather = () => {
-  const [locationWeather, setLocationWeather] = useState({});
+  const [currentWeather, setCurrentWeather] = useState({});
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { coordinates } = useParams();
@@ -46,10 +48,10 @@ const Weather = () => {
           weather: [{ icon }],
         } = data.current;
 
-        const currentWeather = {
+        const currentWeatherData = {
           time: dt,
-          temp,
-          feels_like,
+          temp: temp.toFixed(),
+          feels_like: feels_like.toFixed(),
           pressure,
           humidity,
           wind_deg,
@@ -57,7 +59,9 @@ const Weather = () => {
           icon: icon.slice(0, -1),
         };
 
-        const forecast = data.daily.slice(1).map((dayForecast) => {
+        setCurrentWeather(currentWeatherData);
+
+        const forecastData = data.daily.slice(1).map((dayForecast) => {
           const {
             dt,
             weather: [{ icon }],
@@ -68,7 +72,7 @@ const Weather = () => {
           return { time: dt, icon: icon.slice(0, -1), temp: day, wind_speed };
         });
 
-        setLocationWeather({ currentWeather, forecast });
+        setForecast(forecastData);
 
         return data;
       } else {
@@ -85,17 +89,6 @@ const Weather = () => {
     getWeatherForecast(lat, lon);
   }, [getWeatherForecast, lat, lon]);
 
-  const {
-    icon,
-    temp,
-    time,
-    feels_like,
-    pressure,
-    humidity,
-    wind_speed,
-    wind_deg,
-  } = locationWeather.current || {};
-
   const handleBackClick = () => {
     history.push('/');
   };
@@ -103,21 +96,14 @@ const Weather = () => {
   const renderWeather = () => {
     if (loading) return <Spinner />;
 
-    if (error || !locationWeather) {
+    if (error) {
       return <ErrorMessage message={error} />;
     }
 
     return (
       <section className={styles.weatherContainer}>
-        <article className={styles.currentWeather}>
-          <div className={styles.leftContainer}></div>
-          <div className={styles.rightContainer}></div>
-        </article>
-        <article className={styles.forecastContainer}>
-          {locationWeather?.forecast?.map((day, index) => (
-            <WeatherCard key={day.time} index={index} {...day} />
-          ))}
-        </article>
+        <CurrentWeather {...currentWeather} />
+        <Forecast forecast={forecast} />
       </section>
     );
   };
@@ -138,7 +124,7 @@ const Weather = () => {
           >
             <BsArrowLeft />
           </button>
-          <FormInput locationName={locationName} />
+          <Form locationName={locationName} />
         </div>
       </header>
       {renderWeather()}

@@ -1,8 +1,10 @@
 export { default as ChooseLocation } from './ChooseLocation';
+export { default as CurrentWeather } from './CurrentWeather';
 export { default as ErrorMessage } from './ErrorMessage';
-export { default as FormInput } from './FormInput';
+export { default as Forecast } from './Forecast';
+export { default as ForecastCard } from './ForecastCard';
+export { default as Form } from './Form';
 export { default as Logo } from './Logo';
 export { default as RecentLocation } from './RecentLocation';
 export { default as Spinner } from './Spinner';
 export { default as Weather } from './Weather';
-export { default as WeatherCard } from './WeatherCard';

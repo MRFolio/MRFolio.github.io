@@ -2,20 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { HiLocationMarker, HiOutlineLocationMarker } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 import { ErrorMessage, Spinner } from '../components';
-import { useWeatherContext } from '../store/WeatherContext';
+import useGeocode from '../hooks/useGeocode';
 import { citiesList } from '../utils';
-import styles from './FormInput.module.scss';
+import styles from './Form.module.scss';
 
-const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/direct?q=';
-
-const FormInput = ({ locationName }) => {
+const Form = ({ locationName }) => {
   const [userInput, setUserInput] = useState(locationName || '');
   const [activeSuggestion, setActiveSuggestion] = useState(0);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const { addLocationToRecentlyViewedList } = useWeatherContext();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { error, loading, geocode } = useGeocode();
   const history = useHistory();
   const wrapperRef = useRef(null);
 
@@ -53,33 +49,6 @@ const FormInput = ({ locationName }) => {
     setShowSuggestions(true);
     setActiveSuggestion(0);
     setUserInput(input);
-  };
-
-  const geocode = async (location) => {
-    const geoUrl = `${API_ENDPOINT}${location}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
-    setError(undefined);
-    setLoading(true);
-
-    try {
-      const response = await fetch(geoUrl);
-      const data = await response.json();
-
-      if (!response.ok || data.length === 0) {
-        throw new Error("Can't find such location");
-      }
-
-      if (data) {
-        addLocationToRecentlyViewedList(location);
-        const { lat, lon } = data[0];
-        history.push(`/location/${location}_${lat}_${lon}`);
-      }
-
-      return data;
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleKeyDown = async (e) => {
@@ -186,4 +155,4 @@ const FormInput = ({ locationName }) => {
   );
 };
 
-export default FormInput;
+export default Form;

@@ -4,6 +4,7 @@
   width: 226.63px;
   height: 77.82px;
   position: relative;
+  cursor: pointer;
 
   @include b.mediaQuery(b.$tablet) {
     top: -10%;

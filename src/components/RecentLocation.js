@@ -1,21 +1,14 @@
+import { memo } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
-import { useHistory } from 'react-router';
+import { ErrorMessage, Spinner } from '../components';
 import useGeocode from '../hooks/useGeocode';
-import { useWeatherContext } from '../store/WeatherContext';
 import styles from './RecentLocation.module.scss';
 
-const RecentLocation = ({ location }) => {
-  const { error, loading, coordinates } = useGeocode(location);
-  const { addLocationToRecentlyViewedList } = useWeatherContext();
-  const history = useHistory();
+const RecentLocation = memo(({ location }) => {
+  const { error, loading, geocode } = useGeocode();
 
   const handleClick = async () => {
-    // await geocode(location);
-    if (coordinates) {
-      const { lat, lon } = coordinates;
-      addLocationToRecentlyViewedList(location);
-      history.push(`/location/${location}_${lat}_${lon}`);
-    }
+    await geocode(location);
   };
 
   return (
@@ -31,8 +24,10 @@ const RecentLocation = ({ location }) => {
         <span className={styles.text}>Check weather</span>
         <BsArrowRight className={styles.icon} />
       </button>
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
     </li>
   );
-};
+});
 
 export default RecentLocation;

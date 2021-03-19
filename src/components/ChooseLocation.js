@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  ErrorMessage,
-  FormInput,
-  RecentLocation,
-  Spinner,
-} from '../components';
+import { ErrorMessage, Form, RecentLocation, Spinner } from '../components';
 import { useWeatherContext } from '../store/WeatherContext';
 import styles from './ChooseLocation.module.scss';
 
@@ -86,7 +81,7 @@ const ChooseLocation = () => {
   return (
     <>
       <section className={styles.locationContainer}>
-        <FormInput />
+        <Form />
         <button
           className={styles.locationBtn}
           type="button"
@@ -104,7 +99,7 @@ const ChooseLocation = () => {
           <h2 className={styles.headingRecent}>Recently viewed</h2>
           <ul>
             {recentlyViewed
-              ?.slice(0)
+              .slice(0)
               .reverse()
               .slice(0, 5)
               .map((location, i) => (

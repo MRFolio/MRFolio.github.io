@@ -1,8 +1,15 @@
+import { useHistory } from 'react-router-dom';
 import styles from './Logo.module.scss';
 
 const Logo = () => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push('/');
+  };
+
   return (
-    <div className={styles.logoContainer}>
+    <div className={styles.logoContainer} role="button" onClick={handleClick}>
       <h1 className={styles.firstRow}>
         Where is <s className={styles.strikeWord}>Waldo</s>
       </h1>
