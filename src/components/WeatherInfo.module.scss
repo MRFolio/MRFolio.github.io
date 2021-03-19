@@ -1,0 +1,11 @@
+@use "../styles/base" as b;
+
+.weatherContainer {
+  max-width: 680px;
+  align-items: center;
+  margin: 0 auto;
+
+  @include b.mediaQuery(b.$mobile) {
+    padding: 0 0.75em;
+  }
+}

@@ -9,7 +9,12 @@ const Logo = () => {
   };
 
   return (
-    <div className={styles.logoContainer} role="button" onClick={handleClick}>
+    <div
+      className={styles.logoContainer}
+      role="button"
+      title="Navigate to homepage"
+      onClick={handleClick}
+    >
       <h1 className={styles.firstRow}>
         Where is <s className={styles.strikeWord}>Waldo</s>
       </h1>

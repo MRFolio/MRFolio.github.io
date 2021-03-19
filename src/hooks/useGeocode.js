@@ -27,7 +27,7 @@ const useGeocode = () => {
         if (data) {
           addLocationToRecentlyViewedList(locationName);
           const { lat, lon } = data[0];
-          history.push(`/location/${locationName}_${lat}_${lon}`);
+          history.push(`/location/${lat}_${lon}`);
         }
 
         return data;

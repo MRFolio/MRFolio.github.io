@@ -1,0 +1,19 @@
+@use "../styles/base" as b;
+
+.recentlyContainer {
+  margin: 6.8125em 0.75em 0;
+
+  @include b.mediaQuery(b.$tablet) {
+    margin: 0 0.75em;
+    width: 98%;
+  }
+
+  .headingRecent {
+    margin: 0.5em 0;
+    font: {
+      size: 0.75rem;
+      weight: normal;
+      style: normal;
+    }
+  }
+}

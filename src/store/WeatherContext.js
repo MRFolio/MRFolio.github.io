@@ -14,10 +14,6 @@ const getLocalStorage = () =>
     : [];
 
 const WeatherProvider = ({ children }) => {
-  // const [currentLocation, setCurrentLocation] = useState({});
-  // const [locationWeather, setLocationWeather] = useState({});
-  // const [error, setError] = useState('');
-  // const [loading, setLoading] = useState(false);
   const [recentlyViewed, setRecentlyViewed] = useState(getLocalStorage());
 
   useEffect(() => {
@@ -34,12 +30,6 @@ const WeatherProvider = ({ children }) => {
   return (
     <WeatherContext.Provider
       value={{
-        // locationWeather,
-        // loading,
-        // error,
-        // setError,
-        // setLoading,
-        // setCurrentLocation,
         recentlyViewed,
         addLocationToRecentlyViewedList,
       }}

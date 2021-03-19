@@ -5,9 +5,6 @@
   flex-direction: column;
   align-items: center;
   transform: translateY(-1.875em);
-  // .form {
-  //   position: absolute;
-  // }
 
   .locationBtn {
     margin: 1.5em 0;
@@ -24,24 +21,6 @@
     .locationBtnText {
       font-size: 0.75rem;
       border-bottom: 1px solid #000;
-    }
-  }
-}
-
-.recentlyContainer {
-  margin: 6.8125em 0.75em 0;
-
-  @include b.mediaQuery(b.$mobile) {
-    margin: 0 0.75em;
-    width: 100%;
-  }
-
-  .headingRecent {
-    margin: 0.5em 0;
-    font: {
-      size: 0.75rem;
-      weight: normal;
-      style: normal;
     }
   }
 }

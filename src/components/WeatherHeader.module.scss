@@ -17,7 +17,7 @@
 .logoContainer {
   position: absolute;
   left: 50.44px;
-  top: 42.84px;
+  top: 42.75px;
 
   @include b.mediaQuery(b.$big-screen) {
     position: inherit;
@@ -52,15 +52,5 @@
     &:hover {
       color: b.$hoverColor;
     }
-  }
-}
-
-.weatherContainer {
-  max-width: 680px;
-  align-items: center;
-  margin: 0 auto;
-
-  @include b.mediaQuery(b.$mobile) {
-    padding: 0 0.75em;
   }
 }

@@ -12,21 +12,23 @@ const RecentLocation = memo(({ location }) => {
   };
 
   return (
-    <li className={styles.container}>
-      <h3 className={styles.heading}>{location}</h3>
-      <button
-        type="button"
-        aria-label={`Check ${location} weather forecast`}
-        title={`Check ${location.toUpperCase()} weather forecast`}
-        onClick={handleClick}
-        className={styles.button}
-      >
-        <span className={styles.text}>Check weather</span>
-        <BsArrowRight className={styles.icon} />
-      </button>
+    <>
+      <li className={styles.container}>
+        <h3 className={styles.heading}>{location}</h3>
+        <button
+          type="button"
+          aria-label={`Check ${location} weather forecast`}
+          title={`Check ${location.toUpperCase()} weather forecast`}
+          onClick={handleClick}
+          className={styles.button}
+        >
+          <span className={styles.text}>Check weather</span>
+          <BsArrowRight className={styles.icon} />
+        </button>
+      </li>
       {loading && <Spinner />}
       {error && <ErrorMessage message={error} />}
-    </li>
+    </>
   );
 });
 

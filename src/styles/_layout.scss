@@ -4,11 +4,34 @@
 }
 
 .header {
-  // height: 22.66vh;
   height: 204px;
   background: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0 3.1525em;
+}
+
+.errorContainer {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+
+  .heading {
+    align-self: flex-end;
+  }
+
+  .backBtn {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    font-size: 1.12rem;
+    margin: 2em 0;
+    padding: 0.75em 1.25em;
+    cursor: pointer;
+    width: 90%;
+    max-width: 214px;
+  }
 }

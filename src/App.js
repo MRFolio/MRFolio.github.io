@@ -10,7 +10,6 @@ const App = () => {
           exact
           path="/location/:coordinates"
           component={LocationWeather}
-          // render={(props) => <Weather {...props} />}
         />
         <Route path="*" component={Error} />
       </Switch>

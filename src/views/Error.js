@@ -1,3 +1,4 @@
+import { BsArrowLeft } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 
 const Error = () => {
@@ -8,12 +9,19 @@ const Error = () => {
   };
 
   return (
-    <>
-      <p>Nothing to see here.</p>
-      <button style={{ cursor: 'pointer' }} onClick={handleBack}>
-        Go Back
+    <section className="errorContainer">
+      <h2 className="heading">
+        Nothing to see <em>here</em>!
+      </h2>
+      <button
+        type="button"
+        aria-label="Navigate back to previous page"
+        className="backBtn"
+        onClick={handleBack}
+      >
+        <BsArrowLeft /> Go Back
       </button>
-    </>
+    </section>
   );
 };
 

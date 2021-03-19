@@ -1,10 +1,13 @@
-import { Weather } from '../components';
+import { WeatherHeader, WeatherInfo } from '../components';
 
 const LocationWeather = () => {
   return (
-    <main className="main">
-      <Weather />
-    </main>
+    <>
+      <WeatherHeader />
+      <main className="main">
+        <WeatherInfo />
+      </main>
+    </>
   );
 };
 

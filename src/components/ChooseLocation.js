@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ErrorMessage, Form, RecentLocation, Spinner } from '../components';
+import { ErrorMessage, Form, Spinner } from '../components';
 import { useWeatherContext } from '../store/WeatherContext';
 import styles from './ChooseLocation.module.scss';
 
 const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/reverse?';
 
 const ChooseLocation = () => {
-  const {
-    recentlyViewed,
-    addLocationToRecentlyViewedList,
-  } = useWeatherContext();
+  const { addLocationToRecentlyViewedList } = useWeatherContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
@@ -24,7 +21,7 @@ const ChooseLocation = () => {
       const response = await fetch(reverseGeoUrl);
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data) {
         return data[0].name;
       } else {
         throw new Error("Can't find location");
@@ -44,7 +41,7 @@ const ChooseLocation = () => {
 
       if (locationName) {
         addLocationToRecentlyViewedList(locationName);
-        history.push(`/location/${locationName}_${lat}_${lon}`);
+        history.push(`/location/${lat}_${lon}`);
       }
     };
 
@@ -75,20 +72,6 @@ const ChooseLocation = () => {
         </button>
       </section>
       {error && <ErrorMessage message={error} />}
-      {Boolean(recentlyViewed.length) && (
-        <section className={styles.recentlyContainer}>
-          <h2 className={styles.headingRecent}>Recently viewed</h2>
-          <ul>
-            {recentlyViewed
-              .slice(0)
-              .reverse()
-              .slice(0, 5)
-              .map((location, i) => (
-                <RecentLocation key={i} location={location} />
-              ))}
-          </ul>
-        </section>
-      )}
     </>
   );
 };

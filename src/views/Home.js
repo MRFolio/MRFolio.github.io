@@ -1,4 +1,4 @@
-import { ChooseLocation, Logo } from '../components';
+import { ChooseLocation, Logo, RecentlyViewed } from '../components';
 
 const Home = () => {
   return (
@@ -8,6 +8,7 @@ const Home = () => {
       </header>
       <main className="main">
         <ChooseLocation />
+        <RecentlyViewed />
       </main>
     </>
   );
