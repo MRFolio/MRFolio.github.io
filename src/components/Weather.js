@@ -26,6 +26,8 @@ const Weather = () => {
   const locationName = url_Array[0];
   const lat = url_Array[1];
   const lon = url_Array[2];
+  const capitalizedLocationName =
+    locationName[0].toUpperCase() + locationName.substring(1);
 
   const getWeatherForecast = useCallback(async (latitude, longitude) => {
     const url = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}${API_EXCLUDE}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
@@ -124,7 +126,7 @@ const Weather = () => {
           >
             <BsArrowLeft />
           </button>
-          <Form locationName={locationName} />
+          <Form locationName={capitalizedLocationName} />
         </div>
       </header>
       {renderWeather()}

@@ -40,26 +40,12 @@ const ChooseLocation = () => {
     const success = async (position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      // const reverseGeoUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
-      // setUrl(reverseGeoUrl);
-      // console.log(locationName);
       const locationName = await reverseGeocode(lat, lon);
-      // setCurrentLocation({ lat, lon });
+
       if (locationName) {
         addLocationToRecentlyViewedList(locationName);
-        // setRecentlyViewed([...recentlyViewed, location])
         history.push(`/location/${locationName}_${lat}_${lon}`);
       }
-
-      // if (locationName) {
-      //   history.push({
-      //     pathname: `/location/${locationName}_${lat}_${lon}`,
-      //     // pathname: `/location/${lat}_${lon}`,
-      //     // state: { locationName },
-      //   });
-      // }
-      // console.log(locationName);
-      // history.push(`/location/${locationName}`);
     };
 
     const error = () => {
@@ -69,11 +55,6 @@ const ChooseLocation = () => {
     !navigator.geolocation
       ? setError('Geolocation is not supported by your browser.')
       : navigator.geolocation.getCurrentPosition(success, error);
-
-    // setCurrentLocationCoordinates({
-    //   lat: position.coords.latitude,
-    //   long: position.coords.longitude,
-    // });
   };
 
   if (loading) return <Spinner />;

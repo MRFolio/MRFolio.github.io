@@ -2,7 +2,7 @@
 
 .currentWeatherContainer {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: flex-start;
   justify-content: space-between;
   padding: 2em;
@@ -10,21 +10,21 @@
   border-radius: 0.625em;
 
   @include b.mediaQuery(b.$mobile) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25em;
+    justify-content: space-evenly;
+    gap: 1em;
   }
 }
 
 .leftContainer {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  width: 250.03px;
-  height: 71px;
   gap: 1.5em;
   font-weight: 500;
+
+  .icon {
+    color: #ffffff;
+    font-size: 4.23rem;
+  }
 
   .heading {
     font-size: 2.25rem;
@@ -33,7 +33,6 @@
 
   .time {
     font-size: 1.5rem;
-    line-height: 28.13px;
   }
 
   .updated {
@@ -41,11 +40,6 @@
     line-height: 14.06px;
     color: #626262;
     margin-left: 0.5em;
-  }
-
-  .icon {
-    color: #ffffff;
-    font-size: 3.88rem;
   }
 }
 

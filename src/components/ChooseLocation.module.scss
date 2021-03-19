@@ -31,6 +31,11 @@
 .recentlyContainer {
   margin: 6.8125em 0.75em 0;
 
+  @include b.mediaQuery(b.$mobile) {
+    margin: 0 0.75em;
+    width: 100%;
+  }
+
   .headingRecent {
     margin: 0.5em 0;
     font: {

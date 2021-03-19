@@ -1,8 +1,8 @@
 @use "../styles/base" as b;
 
 .container {
-  max-width: 442px;
-  max-height: 92px;
+  width: 442px;
+  height: 92px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +10,10 @@
   border-radius: 0.625em;
   padding: 1.25em;
   margin: 0.5em 0;
+
+  @include b.mediaQuery(b.$mobile) {
+    width: 100%;
+  }
 
   .heading {
     font: {

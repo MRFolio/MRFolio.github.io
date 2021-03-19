@@ -115,6 +115,7 @@ const Form = ({ locationName }) => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
+
         {userInput ? (
           <HiLocationMarker className={`${styles.icon} ${styles.active}`} />
         ) : (
