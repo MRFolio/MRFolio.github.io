@@ -99,7 +99,7 @@ const ChooseLocation = () => {
         </button>
       </section>
       {error && <ErrorMessage message={error} />}
-      {recentlyViewed && (
+      {Boolean(recentlyViewed.length) && (
         <section className={styles.recentlyContainer}>
           <h2 className={styles.headingRecent}>Recently viewed</h2>
           <ul>

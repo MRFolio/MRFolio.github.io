@@ -26,7 +26,7 @@ const FormInput = ({ locationName }) => {
     }
   };
 
-  // click outside effect
+  // click outside form to close suggestions box
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 

@@ -14,7 +14,7 @@ const Error = ({ message }) => {
     setVisible(true);
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 5000);
+    }, 4500);
 
     return () => clearTimeout(timer);
   }, [message]);

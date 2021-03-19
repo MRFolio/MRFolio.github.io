@@ -1,32 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const useGeocode = (initialUrl) => {
-  const [url, setUrl] = useState(initialUrl);
-  const [locationName, setLocationName] = useState({});
-  const [error, setError] = useState({});
+const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/direct?q=';
+
+const useGeocode = (location) => {
+  const [coordinates, setCoordinates] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const geocode = useCallback(async (location) => {
+    const geoUrl = `${API_ENDPOINT}${location}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
+    setError(undefined);
+    setLoading(true);
+
+    try {
+      const response = await fetch(geoUrl);
+      const data = await response.json();
+
+      if (!response.ok || data.length === 0) {
+        throw new Error("Can't find such location");
+      }
+
+      if (data) {
+        const { lat, lon } = data[0];
+        setCoordinates({ lat, lon });
+      }
+
+      return data;
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(undefined);
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setLocationName(data[0].name);
+    geocode(location);
+  }, [geocode, location]);
 
-        return data;
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [url]);
-
-  return { locationName, error, loading, setUrl };
+  return { error, loading, coordinates };
 };
 
 export default useGeocode;
