@@ -8,7 +8,7 @@ const WeatherHeader = () => {
   const { recentlyViewed } = useWeatherContext();
   const history = useHistory();
 
-  const locationName = recentlyViewed[recentlyViewed.length - 1];
+  const locationName = recentlyViewed[0];
   const capitalizedLocationName =
     locationName[0].toUpperCase() + locationName.substring(1);
 
