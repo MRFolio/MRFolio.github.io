@@ -57,22 +57,20 @@ const ChooseLocation = () => {
   if (loading) return <Spinner />;
 
   return (
-    <>
-      <section className={styles.locationContainer}>
-        <Form />
-        <button
-          className={styles.locationBtn}
-          type="button"
-          aria-label="Select my current location for weather information"
-          onClick={handleClick}
-        >
-          <span className={styles.locationBtnText}>
-            Select my current location
-          </span>
-        </button>
-      </section>
+    <section className={styles.locationContainer}>
+      <Form />
+      <button
+        className={styles.locationBtn}
+        type="button"
+        aria-label="Select my current location for weather information"
+        onClick={handleClick}
+      >
+        <span className={styles.locationBtnText}>
+          Select my current location
+        </span>
+      </button>
       {error && <ErrorMessage message={error} />}
-    </>
+    </section>
   );
 };
 

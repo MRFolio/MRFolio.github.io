@@ -11,10 +11,14 @@ const RecentLocation = memo(({ location }) => {
     await geocode(location);
   };
 
+  if (loading) return <Spinner />;
+
   return (
-    <>
-      <li className={styles.container}>
-        <h3 className={styles.heading}>{location}</h3>
+    <li className={styles.container}>
+      <h3 className={styles.heading}>{location}</h3>
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : (
         <button
           type="button"
           aria-label={`Check ${location} weather forecast`}
@@ -25,10 +29,8 @@ const RecentLocation = memo(({ location }) => {
           <span className={styles.text}>Check weather</span>
           <BsArrowRight className={styles.icon} />
         </button>
-      </li>
-      {loading && <Spinner />}
-      {error && <ErrorMessage message={error} />}
-    </>
+      )}
+    </li>
   );
 });
 

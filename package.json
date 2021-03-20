@@ -1,5 +1,7 @@
 {
   "name": "weather-app",
+  "homepage": "https://MRFolio.github.io",
+  "description": "Weather app with current weather and 7 day forecast available with each location.",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,7 +26,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -b master -d build"
   },
-  "homepage": "https://mrfolio.github.io",
   "eslintConfig": {
     "extends": [
       "react-app",

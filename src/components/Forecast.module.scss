@@ -3,7 +3,7 @@
 .forecastContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  margin-top: 4em;
+  margin: 4em 0;
   gap: 2em;
 
   @include b.mediaQuery(b.$mobile) {
