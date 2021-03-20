@@ -21,9 +21,10 @@ const WeatherProvider = ({ children }) => {
   }, [recentlyViewed]);
 
   const addLocationToRecentlyViewedList = useCallback((locationName) => {
+    // Add to beginning of array
     setRecentlyViewed((prevRecentlyViewed) => [
-      ...prevRecentlyViewed,
       locationName,
+      ...prevRecentlyViewed,
     ]);
   }, []);
 

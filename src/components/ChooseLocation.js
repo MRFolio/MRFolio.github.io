@@ -5,6 +5,7 @@ import { useWeatherContext } from '../store/WeatherContext';
 import styles from './ChooseLocation.module.scss';
 
 const API_ENDPOINT = 'https://api.openweathermap.org/geo/1.0/reverse?';
+const { REACT_APP_API_KEY } = process.env;
 
 const ChooseLocation = () => {
   const { addLocationToRecentlyViewedList } = useWeatherContext();
@@ -13,7 +14,7 @@ const ChooseLocation = () => {
   const history = useHistory();
 
   const reverseGeocode = async (latitude, longitude) => {
-    const reverseGeoUrl = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}&limit=1&appid=${process.env.REACT_APP_API_KEY}`;
+    const reverseGeoUrl = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}&limit=1&appid=${REACT_APP_API_KEY}`;
     setError(undefined);
     setLoading(true);
 
@@ -21,11 +22,11 @@ const ChooseLocation = () => {
       const response = await fetch(reverseGeoUrl);
       const data = await response.json();
 
-      if (response.ok && data) {
-        return data[0].name;
-      } else {
+      if (!response.ok || !data) {
         throw new Error("Can't find location");
       }
+
+      return data[0].name;
     } catch (error) {
       setError(error.message);
     } finally {
@@ -50,7 +51,7 @@ const ChooseLocation = () => {
     };
 
     !navigator.geolocation
-      ? setError('Geolocation is not supported by your browser.')
+      ? setError('Geolocation is not supported by your browser')
       : navigator.geolocation.getCurrentPosition(success, error);
   };
 

@@ -5,6 +5,7 @@ import styles from './WeatherInfo.module.scss';
 
 const API_ENDPOINT = 'https://api.openweathermap.org/data/2.5/onecall?';
 const API_EXCLUDE = '&exclude=hourly,minutely,alerts';
+const { REACT_APP_API_KEY } = process.env;
 
 const WeatherInfo = () => {
   const [currentWeather, setCurrentWeather] = useState({});
@@ -18,7 +19,7 @@ const WeatherInfo = () => {
   const lon = url_Array[1];
 
   const getWeatherForecast = useCallback(async (latitude, longitude) => {
-    const url = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}${API_EXCLUDE}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+    const url = `${API_ENDPOINT}lat=${latitude}&lon=${longitude}${API_EXCLUDE}&appid=${REACT_APP_API_KEY}&units=metric`;
     setError(undefined);
     setLoading(true);
 
@@ -45,7 +46,7 @@ const WeatherInfo = () => {
           pressure,
           humidity,
           wind_deg,
-          wind_speed,
+          wind_speed: wind_speed.toFixed(),
           icon: icon.slice(0, -1),
         };
 
@@ -65,9 +66,9 @@ const WeatherInfo = () => {
         setForecast(forecastData);
 
         return data;
-      } else {
-        throw new Error('Bad API request');
       }
+
+      throw new Error('Data request failed');
     } catch (error) {
       setError(error.message);
     } finally {

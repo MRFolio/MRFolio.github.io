@@ -10,13 +10,9 @@ const RecentlyViewed = () => {
       <section className={styles.recentlyContainer}>
         <h2 className={styles.headingRecent}>Recently viewed</h2>
         <ul>
-          {recentlyViewed
-            .slice(0)
-            .reverse()
-            .slice(0, 5)
-            .map((location, i) => (
-              <RecentLocation key={i} location={location} />
-            ))}
+          {recentlyViewed.slice(0, 5).map((location, i) => (
+            <RecentLocation key={i} location={location} />
+          ))}
         </ul>
       </section>
     )
