@@ -1,8 +1,8 @@
 ## Weather app
 
-Current weather and 7 day forecast available with each location. Built with React using [OpenWeatherMap API](https://openweathermap.org/api 'OpenWeatherMap API page').
+Built with React using [OpenWeatherMap API](https://openweathermap.org/api 'OpenWeatherMap API page'). Users can query weather information by either utilizing the input field or by selecting the current location. Current weather and 7 day forecast is available with each location.
 
-<!-- You can check out the LIVE project [**HERE**](https://e-commerce-mr.netlify.app/ 'Completed Weather app project demo'). -->
+You can check out the LIVE project [**HERE**](https://weather-app-markus-roose.netlify.app/ 'Completed Weather app project demo').
 
 ---
 

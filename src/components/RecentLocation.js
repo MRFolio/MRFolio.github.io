@@ -11,8 +11,6 @@ const RecentLocation = memo(({ location }) => {
     await geocode(location);
   };
 
-  if (loading) return <Spinner />;
-
   return (
     <li className={styles.container}>
       <h3 className={styles.heading}>{location}</h3>
@@ -30,6 +28,7 @@ const RecentLocation = memo(({ location }) => {
           <BsArrowRight className={styles.icon} />
         </button>
       )}
+      {loading && <Spinner />}
     </li>
   );
 });

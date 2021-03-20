@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useWeatherContext } from '../store/WeatherContext';
 
-const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/direct?q=';
+const API_ENDPOINT = 'https://api.openweathermap.org/geo/1.0/direct?q=';
 
 const useGeocode = () => {
   const [loading, setLoading] = useState(false);

@@ -18,7 +18,6 @@ const Error = () => {
         className="backBtn"
         onClick={handleBack}
       >
-        {' '}
         Go Back
       </button>
     </section>

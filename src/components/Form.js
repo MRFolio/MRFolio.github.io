@@ -72,7 +72,7 @@ const Form = ({ locationName }) => {
         setActiveSuggestion(activeSuggestion - 1);
         break;
       case 40: // down arrow
-        if (filteredSuggestions.length - 2 === activeSuggestion) {
+        if (activeSuggestion === filteredSuggestions.length - 2) {
           return;
         }
         setActiveSuggestion(activeSuggestion + 1);

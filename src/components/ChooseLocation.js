@@ -4,7 +4,7 @@ import { ErrorMessage, Form, Spinner } from '../components';
 import { useWeatherContext } from '../store/WeatherContext';
 import styles from './ChooseLocation.module.scss';
 
-const API_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/reverse?';
+const API_ENDPOINT = 'https://api.openweathermap.org/geo/1.0/reverse?';
 
 const ChooseLocation = () => {
   const { addLocationToRecentlyViewedList } = useWeatherContext();
@@ -54,8 +54,6 @@ const ChooseLocation = () => {
       : navigator.geolocation.getCurrentPosition(success, error);
   };
 
-  if (loading) return <Spinner />;
-
   return (
     <section className={styles.locationContainer}>
       <Form />
@@ -69,6 +67,7 @@ const ChooseLocation = () => {
           Select my current location
         </span>
       </button>
+      {loading && <Spinner />}
       {error && <ErrorMessage message={error} />}
     </section>
   );
